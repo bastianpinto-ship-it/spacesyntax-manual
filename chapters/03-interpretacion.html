@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cap. 3 — Interpretación · Manual Space Syntax</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .comparison-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    @media (max-width: 600px) { .comparison-cards { grid-template-columns: 1fr; } }
+    .cmp-card {
+      border-radius: 4px;
+      padding: 1.5rem;
+      border: 1px solid var(--rule);
+    }
+    .cmp-card.integration { border-top: 4px solid var(--accent); background: #fff8f7; }
+    .cmp-card.choice      { border-top: 4px solid var(--accent-warm); background: #fff9f5; }
+    .cmp-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--blue-deep);
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+    }
+    .cmp-card p { font-size: 0.83rem; line-height: 1.65; margin-bottom: 0; }
+    .cmp-card .cmp-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .cmp-card.integration .cmp-tag { color: var(--accent); }
+    .cmp-card.choice .cmp-tag      { color: var(--accent-warm); }
+
+    /* Radio diagram */
+    .radio-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    @media (max-width: 600px) { .radio-visual { grid-template-columns: 1fr; } }
+    .radio-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .radio-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--blue-deep);
+      margin-top: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+    .radio-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.55; margin: 0; }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 0.82rem;
+    }
+    .matrix-table th, .matrix-table td {
+      border: 1px solid var(--rule);
+      padding: 0.6rem 0.8rem;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .matrix-table thead th {
+      background: var(--blue-deep);
+      color: #fff;
+      font-family: 'Source Serif 4', serif;
+      font-weight: 600;
+    }
+    .matrix-table thead th:first-child { background: #2c4a7c; }
+    .matrix-table tbody th {
+      background: var(--paper-dark);
+      font-weight: 600;
+      text-align: left;
+      font-family: 'Source Serif 4', serif;
+      color: var(--blue-deep);
+    }
+    .matrix-table .cell-hh { background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+    .matrix-table .cell-hl { background: #fff8e1; color: #e65100; }
+    .matrix-table .cell-lh { background: #e3f2fd; color: #1565c0; }
+    .matrix-table .cell-ll { background: #fce4ec; color: #b71c1c; }
+    .matrix-table td { line-height: 1.4; font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+
+<button id="sidebar-toggle">☰</button>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <span class="label">Manual de referencia</span>
+    <h1>Space Syntax</h1>
+    <p>Análisis urbano — Cerrillos, Santiago</p>
+  </div>
+  <nav class="toc">
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">→</span> Inicio</div>
+      <div class="toc-items"><a class="toc-item" href="../index.html">Portada y contenidos</a></div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">01</span> Introducción</div>
+      <div class="toc-items">
+        <a class="toc-item" href="01-introduccion.html#presentacion">Presentación general</a>
+        <a class="toc-item" href="01-introduccion.html#representaciones">Tipos de representación</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">02</span> Métricas</div>
+      <div class="toc-items">
+        <a class="toc-item" href="02-metricas.html#conn">CONN</a>
+        <a class="toc-item" href="02-metricas.html#integration">Integration</a>
+        <a class="toc-item" href="02-metricas.html#choice">Choice</a>
+        <a class="toc-item" href="02-metricas.html#nain">NAIN</a>
+        <a class="toc-item" href="02-metricas.html#nach">NACH</a>
+      </div>
+    </div>
+    <div class="toc-section open">
+      <div class="toc-chapter"><span class="ch-num">03</span> Interpretación</div>
+      <div class="toc-items">
+        <a class="toc-item active" href="#colores">Lectura de mapas de color</a>
+        <a class="toc-item" href="#alta-int">Calle alta en integración</a>
+        <a class="toc-item" href="#alto-choice">Calle alta en choice</a>
+        <a class="toc-item" href="#baja">Calle baja en ambas</a>
+        <a class="toc-item" href="#diferencias">Centralidad vs. paso</a>
+        <a class="toc-item" href="#combinadas">Lectura comparativa</a>
+        <a class="toc-item" href="#radios">Radios de análisis</a>
+        <a class="toc-item" href="#errores">Errores frecuentes</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">04</span> Aplicaciones</div>
+      <div class="toc-items"><a class="toc-item" href="04-aplicaciones.html">Próximamente</a></div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">Manual en construcción · Cerrillos, Santiago · 2025</div>
+</aside>
+
+<main id="main">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Capítulo 03</div>
+    <h1>Lectura e interpretación de resultados</h1>
+    <p class="subtitle">Cómo leer mapas de color, qué significa que una calle sea alta en integración o choice, y cómo cambia la interpretación según el radio de análisis.</p>
+  </div>
+
+  <div class="content-area">
+
+    <div class="chapter-intro reveal">
+      <span class="chapter-number">3.0 — Introducción</span>
+      <h2>El análisis comienza cuando termina el cálculo</h2>
+      <p class="lead">Una misma red puede producir resultados distintos según la representación elegida, el radio de análisis y el tipo de métrica. Leer un mapa de Space Syntax no consiste solo en identificar colores, sino en comprender qué propiedad espacial está siendo representada y bajo qué condiciones fue calculada.</p>
+    </div>
+
+    <!-- ── COLORES ── -->
+    <section data-section="colores" id="colores">
+      <h3>3.1 — Cómo leer mapas de color</h3>
+
+      <p class="reveal">En la mayoría de los mapas de Space Syntax, los colores expresan un gradiente de valores donde los tonos cálidos (naranja, rojo) suelen corresponder a valores más altos y los fríos (azul) a valores más bajos. Sin embargo, ese gradiente <strong>no tiene un significado universal independiente del indicador</strong>.</p>
+
+      <p class="reveal">Un rojo en integración no significa lo mismo que un rojo en choice. Un azul en NAIN no debe leerse igual que un azul en conectividad. El color solo indica posición relativa dentro de una distribución de valores, mientras que el sentido interpretativo depende del indicador representado.</p>
+
+      <!-- espectro visual -->
+      <div class="diagram-container reveal">
+        <div style="margin-bottom:1rem;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;">Gradiente típico en mapas Space Syntax</div>
+          <div class="spectrum-bar" style="height:18px;border-radius:4px;"></div>
+          <div class="spectrum-labels">
+            <span>Valores bajos — segregado / poco paso</span>
+            <span>Valores altos — integrado / mucho paso</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-top:1.5rem;text-align:left;">
+          <div style="padding:0.75rem;background:#eef3fa;border-radius:3px;border-left:3px solid #2c4a7c;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:#2c4a7c;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Azul</div>
+            <div style="font-size:0.78rem;color:#2c2620;line-height:1.5;">Valor bajo. En integración: más segregada. En choice: menos usada como paso.</div>
+          </div>
+          <div style="padding:0.75rem;background:#fff8e1;border-radius:3px;border-left:3px solid #b8860b;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:#b8860b;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Amarillo / verde</div>
+            <div style="font-size:0.78rem;color:#2c2620;line-height:1.5;">Valor medio. Zona de transición entre alta y baja centralidad.</div>
+          </div>
+          <div style="padding:0.75rem;background:#fdf0ef;border-radius:3px;border-left:3px solid #c0392b;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:#c0392b;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;">Naranja / rojo</div>
+            <div style="font-size:0.78rem;color:#2c2620;line-height:1.5;">Valor alto. En integración: más accesible. En choice: más usada como corredor.</div>
+          </div>
+        </div>
+        <figcaption>La primera regla de lectura: revisar siempre qué métrica se está visualizando antes de interpretar el color.</figcaption>
+      </div>
+
+      <div class="callout warning reveal">
+        <span class="callout-icon">Regla de oro</span>
+        <p>Antes de interpretar cualquier mapa, verificar: (1) ¿Qué métrica muestra? (2) ¿Es axial o segmentario? (3) ¿Qué radio se usó? (4) ¿Están normalizados los valores? Sin ese contexto, el mapa puede ser visualmente impactante pero conceptualmente ambiguo.</p>
+      </div>
+    </section>
+
+    <!-- ── ALTA INTEGRACIÓN ── -->
+    <section data-section="alta-int" id="alta-int">
+      <h3>3.2 — Calle alta en integración</h3>
+
+      <p class="reveal">Cuando una calle presenta un valor alto de integración, ello indica que ocupa una posición relativamente accesible dentro del sistema. Técnicamente, su profundidad media respecto de los demás elementos es menor, por lo que está configuracionalmente más cerca del conjunto.</p>
+
+      <p class="reveal">En términos urbanos, esto se interpreta como una posición <strong>central en sentido estructural</strong>, no geométrico. No significa estar "en el centro del mapa", sino estar bien conectada al resto del sistema: desde esa calle es relativamente fácil llegar a muchas otras partes de la red.</p>
+
+      <div class="callout definition reveal">
+        <span class="callout-icon">Qué significa en la práctica</span>
+        <p>Una calle alta en integración tiende a concentrar movimiento y accesibilidad. Hillier demostró que la integración está fuertemente relacionada con la manera en que el trazado organiza copresencia y movimiento en el espacio público. Muchos estudios han encontrado correlación entre alta integración y mayor intensidad de uso, presencia de comercio y actividad urbana.</p>
+      </div>
+
+      <p class="reveal">Sin embargo, <strong>una calle integrada no es automáticamente una calle activa</strong>. Su alta integración muestra una condición espacial favorable para la accesibilidad, pero no determina por sí sola calidad urbana, actividad comercial o seguridad. Es perfectamente posible que una calle presente alta integración y no concentre vida urbana significativa si otros factores no acompañan esa condición.</p>
+    </section>
+
+    <!-- ── ALTO CHOICE ── -->
+    <section data-section="alto-choice" id="alto-choice">
+      <h3>3.3 — Calle alta en choice / NACH</h3>
+
+      <p class="reveal">Un valor alto de choice o NACH expresa que muchas trayectorias probables entre orígenes y destinos pasan por esa calle. Su rol es de <strong>corredor o ruta de paso</strong>, no necesariamente de destino central.</p>
+
+      <p class="reveal">En términos simples, una calle alta en choice es una calle "de paso": el sistema la usa para conectar otros puntos. Esto es distinto de ser un lugar central para quedarse o como destino dentro de la red.</p>
+
+      <div class="comparison-cards reveal">
+        <div class="cmp-card integration">
+          <span class="cmp-tag">Integración alta</span>
+          <h4>Calle como destino</h4>
+          <p>Es fácil llegar a ella desde muchos puntos. Tiende a acumular actividad y presencia de personas como lugar de llegada. Importante para accesibilidad y uso.</p>
+        </div>
+        <div class="cmp-card choice">
+          <span class="cmp-tag">Choice alto</span>
+          <h4>Calle como corredor</h4>
+          <p>Muchas rutas pasan por ella al conectar otros lugares. Su importancia es para el paso, no necesariamente para quedarse. Importante para flujo y conexión.</p>
+        </div>
+      </div>
+
+      <p class="reveal">Una calle puede ser alta en choice sin ser particularmente alta en integración. Algunas vías articulan grandes flujos de paso sin ser los destinos más accesibles del sistema. Esta diferencia es una de las distinciones más útiles de Space Syntax para interpretar jerarquías urbanas.</p>
+    </section>
+
+    <!-- ── BAJA ── -->
+    <section data-section="baja" id="baja">
+      <h3>3.4 — Calle con valores bajos</h3>
+
+      <p class="reveal">Una calle baja en integración suele interpretarse como más profunda o segregada respecto del conjunto. Configuracionalmente, está más lejos del resto de la red. En lectura urbana, esto puede corresponder a calles internas, residenciales, de borde o con menor articulación estructural.</p>
+
+      <p class="reveal">Una calle baja en choice indica escasa importancia como ruta intermedia. <strong>No implica que la calle sea "problemática"</strong>; simplemente no aparece como corredor relevante dentro de los recorridos mínimos del sistema. En muchos barrios residenciales esto es esperable y coherente con su carácter funcional.</p>
+
+      <div class="callout note reveal">
+        <span class="callout-icon">Nota interpretativa</span>
+        <p>Hillier ha señalado que la lógica espacial del espacio público y la del espacio residencial no son idénticas. En contextos residenciales suele existir una modulación deliberada del movimiento y la copresencia, por lo que valores bajos de integración y choice pueden ser perfectamente coherentes con el tipo de espacio analizado.</p>
+      </div>
+    </section>
+
+    <!-- ── DIFERENCIAS ── -->
+    <section data-section="diferencias" id="diferencias">
+      <h3>3.5 — Centralidad, accesibilidad y paso: tres conceptos distintos</h3>
+
+      <p class="reveal">Es fundamental no mezclar conceptos que, aunque relacionados, no son equivalentes. La integración se refiere a accesibilidad configuracional. Choice se refiere a intermediación o potencial de paso. Conectividad mide articulación local inmediata.</p>
+
+      <table class="comparison-table reveal">
+        <thead>
+          <tr>
+            <th>Indicador</th>
+            <th>Pregunta que responde</th>
+            <th>Concepto urbano</th>
+            <th>No mide</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CONN</td>
+            <td>¿Con cuántas calles conecta directamente?</td>
+            <td>Articulación local</td>
+            <td>Centralidad global ni flujo real</td>
+          </tr>
+          <tr>
+            <td>INT / NAIN</td>
+            <td>¿Qué tan fácil es llegar aquí desde la red?</td>
+            <td>Centralidad configuracional / accesibilidad</td>
+            <td>Importancia como ruta de paso</td>
+          </tr>
+          <tr>
+            <td>TD / MD</td>
+            <td>¿Qué tan lejos está del resto del sistema?</td>
+            <td>Segregación o lejanía estructural</td>
+            <td>Centralidad ni paso por sí solos</td>
+          </tr>
+          <tr>
+            <td>Choice / NACH</td>
+            <td>¿Por cuántas rutas pasa esta calle?</td>
+            <td>Intermediación / potencial de paso</td>
+            <td>Accesibilidad como destino</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── LECTURA COMBINADA ── -->
+    <section data-section="combinadas" id="combinadas">
+      <h3>3.6 — Lectura comparativa entre métricas</h3>
+
+      <p class="reveal">Una de las formas más útiles de interpretar resultados es combinar integración y choice. Esta lectura simultánea permite distinguir cuatro tipos de calles dentro de la red:</p>
+
+      <table class="matrix-table reveal">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Choice ALTO</th>
+            <th>Choice BAJO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Integración ALTA</th>
+            <td class="cell-hh">
+              <strong>Calle estructurante</strong><br>
+              Central como destino y como corredor. Máxima relevancia urbana. Suele concentrar actividad, comercio y flujo.
+            </td>
+            <td class="cell-hl">
+              <strong>Nodo de acceso local</strong><br>
+              Muy accesible pero poco usada como paso. Puede ser importante para un sector sin ser un corredor de conexión.
+            </td>
+          </tr>
+          <tr>
+            <th>Integración BAJA</th>
+            <td class="cell-lh">
+              <strong>Corredor de paso segregado</strong><br>
+              Se usa para cruzar pero no es un destino accesible. Puede corresponder a vías de borde, periféricas o de circunvalación.
+            </td>
+            <td class="cell-ll">
+              <strong>Calle residencial / interior</strong><br>
+              Poco central y poco usada como paso. Normal en zonas residenciales, interiores de barrio o calles cul-de-sac.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="reveal">Esta matriz es una herramienta interpretativa conceptual, no un algoritmo de clasificación automática. En la práctica, los valores son continuos y la mayoría de las calles caen en zonas intermedias.</p>
+    </section>
+
+    <!-- ── RADIOS ── -->
+    <section data-section="radios" id="radios">
+      <h3>3.7 — Radios de análisis</h3>
+
+      <p class="reveal">El radio de análisis define hasta dónde se consideran las relaciones espaciales desde cada elemento. Esta decisión tiene efectos directos sobre los resultados: modifica el universo de relaciones que se toman en cuenta para cada calle o segmento.</p>
+
+      <div class="radio-visual reveal">
+        <div class="radio-card">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:80px;height:80px;">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#e8e0d4" stroke-width="1"/>
+            <circle cx="60" cy="60" r="35" fill="none" stroke="#c8bfb0" stroke-width="1"/>
+            <circle cx="60" cy="60" r="18" fill="rgba(192,57,43,0.15)" stroke="#c0392b" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="6" fill="#c0392b"/>
+            <!-- puntos cercanos -->
+            <circle cx="75" cy="48" r="3" fill="#4a7cb8"/>
+            <circle cx="50" cy="72" r="3" fill="#4a7cb8"/>
+            <circle cx="72" cy="75" r="3" fill="#4a7cb8"/>
+            <line x1="60" y1="60" x2="75" y2="48" stroke="#4a7cb8" stroke-width="1" opacity="0.4"/>
+            <line x1="60" y1="60" x2="50" y2="72" stroke="#4a7cb8" stroke-width="1" opacity="0.4"/>
+            <line x1="60" y1="60" x2="72" y2="75" stroke="#4a7cb8" stroke-width="1" opacity="0.4"/>
+            <!-- puntos lejanos -->
+            <circle cx="30" cy="30" r="3" fill="#c8bfb0"/>
+            <circle cx="95" cy="40" r="3" fill="#c8bfb0"/>
+            <circle cx="25" cy="85" r="3" fill="#c8bfb0"/>
+          </svg>
+          <h4>Radio local</h4>
+          <p>Solo considera relaciones en un radio acotado. Revela estructura barrial, accesibilidad de proximidad y articulación de entorno inmediato.</p>
+        </div>
+        <div class="radio-card">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:80px;height:80px;">
+            <circle cx="60" cy="60" r="52" fill="rgba(74,124,184,0.08)" stroke="#4a7cb8" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="6" fill="#1a2a4a"/>
+            <!-- todos los puntos conectados -->
+            <circle cx="30" cy="30" r="3" fill="#4a7cb8"/>
+            <circle cx="95" cy="40" r="3" fill="#4a7cb8"/>
+            <circle cx="25" cy="85" r="3" fill="#4a7cb8"/>
+            <circle cx="75" cy="48" r="3" fill="#4a7cb8"/>
+            <circle cx="50" cy="72" r="3" fill="#4a7cb8"/>
+            <circle cx="95" cy="90" r="3" fill="#4a7cb8"/>
+            <line x1="60" y1="60" x2="30" y2="30" stroke="#4a7cb8" stroke-width="0.8" opacity="0.3"/>
+            <line x1="60" y1="60" x2="95" y2="40" stroke="#4a7cb8" stroke-width="0.8" opacity="0.3"/>
+            <line x1="60" y1="60" x2="25" y2="85" stroke="#4a7cb8" stroke-width="0.8" opacity="0.3"/>
+            <line x1="60" y1="60" x2="75" y2="48" stroke="#4a7cb8" stroke-width="0.8" opacity="0.3"/>
+            <line x1="60" y1="60" x2="50" y2="72" stroke="#4a7cb8" stroke-width="0.8" opacity="0.3"/>
+            <line x1="60" y1="60" x2="95" y2="90" stroke="#4a7cb8" stroke-width="0.8" opacity="0.3"/>
+          </svg>
+          <h4>Radio global</h4>
+          <p>Considera toda la red. Revela estructura general, centralidades amplias y jerarquías del sistema urbano completo.</p>
+        </div>
+      </div>
+
+      <table class="comparison-table reveal">
+        <thead>
+          <tr>
+            <th>Tipo de radio</th>
+            <th>Definición</th>
+            <th>Qué revela</th>
+            <th>Cuándo usarlo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Global (Rn)</td>
+            <td>Todo el sistema, sin restricción</td>
+            <td>Centralidades globales, jerarquía general de la red</td>
+            <td>Estructura urbana total, comparación entre sectores</td>
+          </tr>
+          <tr>
+            <td>Local (R3, R4…)</td>
+            <td>N pasos topológicos desde cada elemento</td>
+            <td>Articulación barrial, accesibilidad de proximidad</td>
+            <td>Análisis de sectores específicos, escala peatonal</td>
+          </tr>
+          <tr>
+            <td>Métrico (R400, R800…)</td>
+            <td>Distancia real en metros desde cada elemento</td>
+            <td>Alcance caminable, movilidad a escala humana</td>
+            <td>Estudios peatonales, isócronas de accesibilidad</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout critical reveal">
+        <span class="callout-icon">Regla metodológica</span>
+        <p>En un documento académico, no basta con reportar un valor de integración o choice. Siempre se debe indicar el radio usado y justificarlo en función del problema de investigación. Una misma calle puede ser muy integrada localmente y medianamente integrada globalmente: ambas son afirmaciones válidas, pero no intercambiables.</p>
+      </div>
+
+      <h4>Integración local vs. global</h4>
+      <p class="reveal">La relación entre integración local y global varía según el tipo de red. En ciertas ciudades, lo local y lo global se refuerzan; en otras, están más desacoplados. Cuando una ciudad presenta alta correspondencia entre ambas escalas, su estructura es más continua y legible. Cuando están desacopladas, pueden existir fragmentaciones o centralidades barriales relativamente aisladas de la lógica general.</p>
+    </section>
+
+    <!-- ── ERRORES ── -->
+    <section data-section="errores" id="errores">
+      <h3>3.8 — Errores frecuentes de interpretación</h3>
+
+      <div class="metric-grid reveal">
+        <div class="metric-card">
+          <span class="metric-tag">Error 1</span>
+          <h4>Leer todas las métricas como "importancia"</h4>
+          <p>Tratar integración, choice y conectividad como si midieran lo mismo —importancia genérica— borra las diferencias entre accesibilidad, intermediación y articulación local. Reduce el análisis a una jerarquía demasiado simple.</p>
+        </div>
+        <div class="metric-card">
+          <span class="metric-tag">Error 2</span>
+          <h4>Asumir que valor alto = calidad urbana</h4>
+          <p>Alta integración puede concentrar movimiento, pero no garantiza que la calle sea agradable, segura o activa. Una calle baja en choice puede ser poco estratégica para el paso y aun así tener valor urbano significativo.</p>
+        </div>
+        <div class="metric-card">
+          <span class="metric-tag">Error 3</span>
+          <h4>No indicar el radio de análisis</h4>
+          <p>Decir "esta calle es integrada" sin indicar el radio es impreciso. La misma calle puede ser muy integrada localmente y solo medianamente global. El radio es parte sustantiva del resultado, no un detalle técnico menor.</p>
+        </div>
+        <div class="metric-card">
+          <span class="metric-tag">Error 4</span>
+          <h4>Confundir representaciones</h4>
+          <p>Leer valores axiales como si fueran angulares, o comparar métricas calculadas sobre representaciones distintas, genera errores conceptuales. Siempre se debe saber sobre qué representación fue calculado cada valor.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Referencias -->
+    <div class="references reveal">
+      <h3>Referencias del capítulo</h3>
+      <ol>
+        <li>Turner, A. (2004). <em>Depthmap 4: A researcher's handbook</em>. University College London.</li>
+        <li>van Nes, A., & Yamu, C. (2021). <em>Introduction to space syntax in urban studies</em>. Springer.</li>
+        <li>Hillier, B. (2007). <em>Space is the machine</em>. Space Syntax.</li>
+        <li>Yamu, C., van Nes, A., & Garau, C. (2021). Bill Hillier's legacy: Space syntax — A synopsis of basic concepts, measures, and empirical application. <em>Sustainability, 13</em>(6), 3394.</li>
+        <li>Hillier, B., & Sahbaz, O. (2005). High resolution analysis of crime patterns in urban street networks: An initial statistical sketch from an ongoing study of a London borough. <em>Proceedings, 5th International Space Syntax Symposium</em>.</li>
+      </ol>
+    </div>
+
+    <div class="chapter-nav">
+      <a href="02-metricas.html">
+        <span class="nav-label">← Anterior</span>
+        <span class="nav-title">Métricas principales</span>
+      </a>
+      <a href="04-aplicaciones.html" class="next">
+        <span class="nav-label">Siguiente →</span>
+        <span class="nav-title">Aplicaciones y caso Cerrillos</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

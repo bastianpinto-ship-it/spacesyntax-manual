@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cap. 2 — Métricas · Manual Space Syntax</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .metric-full {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .metric-full::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+    }
+    .metric-full.red::before   { background: var(--accent); }
+    .metric-full.blue::before  { background: var(--blue-mid); }
+    .metric-full.gold::before  { background: var(--gold); }
+    .metric-full.warm::before  { background: var(--accent-warm); }
+    .metric-full.teal::before  { background: #2a7d7b; }
+
+    .metric-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .metric-header-left {}
+    .metric-abbrev {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .metric-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--blue-deep);
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
+    .metric-simple {
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .hilo-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-direction: column;
+      align-items: flex-end;
+      min-width: 140px;
+    }
+    .hilo-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .metric-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 2rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 600px) {
+      .metric-body { grid-template-columns: 1fr; }
+      .hilo-badges { align-items: flex-start; }
+    }
+
+    .metric-section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+    .metric-body p {
+      font-size: 0.84rem;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .metric-body .span-2 {
+      grid-column: 1 / -1;
+    }
+
+    .critical-note {
+      margin-top: 1.25rem;
+      padding: 0.75rem 1rem;
+      background: #fdf0ef;
+      border-left: 3px solid var(--accent);
+      border-radius: 2px;
+      font-size: 0.8rem;
+      color: #5a1a15;
+      line-height: 1.6;
+    }
+    .critical-note::before {
+      content: '⚠ ';
+      font-style: normal;
+    }
+
+    .synthesis-box {
+      background: var(--blue-deep);
+      color: #e8e0d4;
+      border-radius: 4px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+    }
+    .synthesis-box h3 {
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .synthesis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .synthesis-item {
+      background: rgba(255,255,255,0.07);
+      border-radius: 3px;
+      padding: 1rem;
+    }
+    .synthesis-item .dim-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .synthesis-item h4 {
+      font-size: 0.9rem;
+      color: #fff;
+      margin: 0 0 0.3rem;
+      font-family: 'Source Serif 4', serif;
+    }
+    .synthesis-item p {
+      font-size: 0.75rem;
+      color: rgba(232,224,212,0.6);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .synthesis-item .metrics-list {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(232,224,212,0.45);
+      margin-top: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+
+<button id="sidebar-toggle">☰</button>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <span class="label">Manual de referencia</span>
+    <h1>Space Syntax</h1>
+    <p>Análisis urbano — Cerrillos, Santiago</p>
+  </div>
+  <nav class="toc">
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">→</span> Inicio</div>
+      <div class="toc-items">
+        <a class="toc-item" href="../index.html">Portada y contenidos</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">01</span> Introducción</div>
+      <div class="toc-items">
+        <a class="toc-item" href="01-introduccion.html#presentacion">Presentación general</a>
+        <a class="toc-item" href="01-introduccion.html#bases">Bases conceptuales</a>
+        <a class="toc-item" href="01-introduccion.html#representaciones">Tipos de representación</a>
+      </div>
+    </div>
+    <div class="toc-section open">
+      <div class="toc-chapter"><span class="ch-num">02</span> Métricas</div>
+      <div class="toc-items">
+        <a class="toc-item active" href="#conn">Connectivity (CONN)</a>
+        <a class="toc-item" href="#integration">Integration (INT)</a>
+        <a class="toc-item" href="#depth">Total Depth / Mean Depth</a>
+        <a class="toc-item" href="#nodecount">Node Count</a>
+        <a class="toc-item" href="#choice">Choice (CH)</a>
+        <a class="toc-item" href="#nain">NAIN</a>
+        <a class="toc-item" href="#nach">NACH</a>
+        <a class="toc-item" href="#geometricos">Atributos geométricos</a>
+        <a class="toc-item" href="#sintesis">Síntesis</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">03</span> Interpretación</div>
+      <div class="toc-items">
+        <a class="toc-item" href="03-interpretacion.html#colores">Lectura de mapas</a>
+        <a class="toc-item" href="03-interpretacion.html#diferencias">Centralidad vs. paso</a>
+        <a class="toc-item" href="03-interpretacion.html#radios">Radios de análisis</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">04</span> Aplicaciones</div>
+      <div class="toc-items">
+        <a class="toc-item" href="04-aplicaciones.html">Próximamente</a>
+      </div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">Manual en construcción · Cerrillos, Santiago · 2025</div>
+</aside>
+
+<main id="main">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Capítulo 02</div>
+    <h1>Métricas principales</h1>
+    <p class="subtitle">Definición técnica, explicación simple, valores altos y bajos, y advertencias críticas para cada indicador.</p>
+  </div>
+
+  <div class="content-area">
+
+    <div class="chapter-intro reveal">
+      <span class="chapter-number">2.0 — Introducción</span>
+      <h2>¿Qué miden las métricas?</h2>
+      <p class="lead">Las métricas de Space Syntax traducen relaciones espaciales abstractas en valores comparables. No miden atributos físicos aislados, sino posiciones relacionales dentro de un sistema.</p>
+    </div>
+
+    <p class="reveal">Una calle no adquiere significado analítico solo por su longitud o ancho, sino por el lugar que ocupa dentro del sistema espacial completo. Por eso, dos calles físicamente parecidas pueden presentar desempeños sintácticos muy distintos según su posición estructural.</p>
+
+    <div class="callout note reveal">
+      <span class="callout-icon">Cómo leer las fichas</span>
+      <p>Cada métrica tiene una <strong>definición técnica</strong> y una <strong>explicación simple</strong>. Los campos "Alto" / "Bajo" indican cómo interpretar los valores en contexto urbano. La nota en rojo al pie marca los errores de interpretación más comunes.</p>
+    </div>
+
+    <!-- ── CONN ── -->
+    <section data-section="conn" id="conn">
+      <div class="metric-full blue reveal">
+        <div class="metric-header">
+          <div class="metric-header-left">
+            <span class="metric-abbrev">CONN — Connectivity</span>
+            <h3>Conectividad</h3>
+            <p class="metric-simple">"¿Con cuántas calles conecta directamente esta calle?"</p>
+          </div>
+          <div class="hilo-badges">
+            <span class="hilo-label">Valores</span>
+            <span class="badge high">Alto → muy articulada</span>
+            <span class="badge low">Bajo → más aislada</span>
+          </div>
+        </div>
+        <div class="metric-body">
+          <div>
+            <span class="metric-section-label">Definición técnica</span>
+            <p>Número de conexiones directas que tiene un elemento con otros dentro de la red espacial. En análisis axial, equivale al grado del nodo: cantidad de líneas que intersectan la línea dada. En análisis segmentario, número de segmentos directamente conectados.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Dimensión que mide</span>
+            <p><strong>Articulación local.</strong> Describe cuántas relaciones inmediatas posee un elemento, sin considerar todavía la estructura global del sistema. Es una propiedad del entorno próximo, no del sistema completo.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor alto</span>
+            <p>Zona de red densa o bien articulada. Múltiples posibilidades inmediatas de continuidad. Puede corresponder a intersecciones importantes o nodos de distribución barrial.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor bajo</span>
+            <p>Posición más terminal o aislada. Común en cul-de-sac, tramos finales o calles con menor articulación inmediata.</p>
+          </div>
+        </div>
+        <p class="critical-note">Alta conectividad no garantiza centralidad global ni alto flujo urbano. Una calle puede tener muchas conexiones directas y aun así ser periférica dentro de la estructura total. Interpretar solo CONN como "importancia" es un error frecuente.</p>
+      </div>
+    </section>
+
+    <!-- ── INTEGRATION ── -->
+    <section data-section="integration" id="integration">
+      <div class="metric-full red reveal">
+        <div class="metric-header">
+          <div class="metric-header-left">
+            <span class="metric-abbrev">INT — Integration</span>
+            <h3>Integración</h3>
+            <p class="metric-simple">"¿Qué tan fácil es llegar a esta calle desde el resto de la red?"</p>
+          </div>
+          <div class="hilo-badges">
+            <span class="hilo-label">Valores</span>
+            <span class="badge high">Alto → central, accesible</span>
+            <span class="badge low">Bajo → segregada, profunda</span>
+          </div>
+        </div>
+        <div class="metric-body">
+          <div>
+            <span class="metric-section-label">Definición técnica</span>
+            <p>Mide cuán accesible es un elemento respecto del conjunto del sistema. Se deriva de la profundidad media o relativa: cuanto menor es la profundidad media desde una calle al resto, mayor es su integración. Es una medida de centralidad configuracional.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Dimensión que mide</span>
+            <p><strong>Centralidad configuracional.</strong> No se refiere a distancia métrica en metros, sino a posición relativa dentro de la estructura del sistema. Una calle integrada requiere, en promedio, menos pasos para conectarse con el resto de la red.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor alto</span>
+            <p>Calle central y accesible. Bien conectada con múltiples partes de la red. En muchos estudios, se asocia con mayor potencial de movimiento, copresencia y uso. Corresponde a los tonos cálidos en los mapas (naranja, rojo).</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor bajo</span>
+            <p>Posición más profunda o segregada respecto del conjunto. Requiere más pasos para conectarse con el resto de la red. Suele corresponder a calles interiores de barrio, bordes o sectores poco articulados.</p>
+          </div>
+        </div>
+
+        <!-- Espectro visual -->
+        <div style="margin-top:1.25rem;">
+          <div class="spectrum-bar"></div>
+          <div class="spectrum-labels">
+            <span>Segregada (bajo)</span>
+            <span>Media</span>
+            <span>Alta integración</span>
+          </div>
+        </div>
+
+        <p class="critical-note">Alta integración no equivale automáticamente a calle "mejor" o "más activa". Muestra una condición espacial favorable para la accesibilidad, pero no determina calidad urbana, actividad comercial o seguridad. Otros factores siempre intervienen.</p>
+      </div>
+    </section>
+
+    <!-- ── DEPTH ── -->
+    <section data-section="depth" id="depth">
+      <div class="metric-full gold reveal">
+        <div class="metric-header">
+          <div class="metric-header-left">
+            <span class="metric-abbrev">TD / MD — Total Depth · Mean Depth</span>
+            <h3>Profundidad Total y Media</h3>
+            <p class="metric-simple">"¿Qué tan lejos está esta calle del resto del sistema?"</p>
+          </div>
+          <div class="hilo-badges">
+            <span class="hilo-label">Valores</span>
+            <span class="badge high">Alto → más segregada</span>
+            <span class="badge low">Bajo → más cercana al sistema</span>
+          </div>
+        </div>
+        <div class="metric-body">
+          <div>
+            <span class="metric-section-label">Total Depth (TD)</span>
+            <p>Suma de las distancias mínimas entre un elemento y todos los demás del sistema. En análisis topológicos, se expresan en pasos; en angulares, como costos de giro acumulados. Es la base para calcular integración.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Mean Depth (MD)</span>
+            <p>Profundidad total dividida por el número de elementos alcanzados. Expresa la distancia promedio desde un elemento al resto del sistema. Una profundidad media alta indica mayor segregación; una baja, mayor accesibilidad.</p>
+          </div>
+          <div class="span-2">
+            <span class="metric-section-label">Relación con integración</span>
+            <p>La integración es esencialmente el inverso de la profundidad: a mayor profundidad, menor integración, y viceversa. Por eso, comprender estas medidas ayuda a entender la lógica interna de la integración y sus variantes normalizadas (NAIN).</p>
+          </div>
+        </div>
+        <p class="critical-note">La profundidad total rara vez se interpreta sola en análisis urbanos. Su importancia principal es que alimenta otras métricas, sobre todo integración y NAIN. Usarla como indicador final sin ese contexto puede llevar a confusión.</p>
+      </div>
+    </section>
+
+    <!-- ── NODE COUNT ── -->
+    <section data-section="nodecount" id="nodecount">
+      <div class="metric-full teal reveal">
+        <div class="metric-header">
+          <div class="metric-header-left">
+            <span class="metric-abbrev">NC — Node Count</span>
+            <h3>Conteo de Nodos</h3>
+            <p class="metric-simple">"¿Cuántos elementos entran en el análisis desde este punto?"</p>
+          </div>
+          <div class="hilo-badges">
+            <span class="hilo-label">Valores</span>
+            <span class="badge high">Alto → mayor universo relacional</span>
+            <span class="badge low">Bajo → universo más limitado</span>
+          </div>
+        </div>
+        <div class="metric-body">
+          <div>
+            <span class="metric-section-label">Definición técnica</span>
+            <p>Número de nodos o elementos considerados en el análisis respecto de un segmento o radio determinado. En análisis angulares normalizados, forma parte de los ajustes para calcular indicadores comparables entre sistemas distintos.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Para qué sirve</span>
+            <p>Permite conocer el universo relacional sobre el que se construyen métricas como NAIN y NACH. No describe centralidad o paso por sí mismo, pero es fundamental para interpretar correctamente esos indicadores derivados.</p>
+          </div>
+        </div>
+        <p class="critical-note">Node Count no es una métrica de interpretación urbana por sí sola. Ignorarlo puede llevar a interpretar NAIN y NACH como si fueran autónomas, cuando en realidad dependen del tamaño y estructura del sistema considerado.</p>
+      </div>
+    </section>
+
+    <!-- ── CHOICE ── -->
+    <section data-section="choice" id="choice">
+      <div class="metric-full warm reveal">
+        <div class="metric-header">
+          <div class="metric-header-left">
+            <span class="metric-abbrev">CH — Choice</span>
+            <h3>Choice (Elección)</h3>
+            <p class="metric-simple">"¿Por cuántas rutas pasa esta calle al conectar otros puntos de la red?"</p>
+          </div>
+          <div class="hilo-badges">
+            <span class="hilo-label">Valores</span>
+            <span class="badge high">Alto → corredor estratégico</span>
+            <span class="badge low">Bajo → ruta poco usada como paso</span>
+          </div>
+        </div>
+        <div class="metric-body">
+          <div>
+            <span class="metric-section-label">Definición técnica</span>
+            <p>Mide cuántas veces un elemento cae dentro de las rutas mínimas entre pares de origen y destino de la red. En teoría de redes, equivale a <em>betweenness centrality</em>. Expresa el potencial de <strong>through-movement</strong>: la probabilidad de ser usado como ruta de paso.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Dimensión que mide</span>
+            <p><strong>Intermediación configuracional.</strong> A diferencia de la integración (cercanía al conjunto), choice mide qué tan importante es un elemento como corredor dentro de las trayectorias del sistema. Una calle puede ser estratégica para el paso sin ser el destino principal.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor alto</span>
+            <p>Gran importancia como ruta de conexión o paso. Muchas trayectorias probables entre orígenes y destinos pasan por esta calle. Suele corresponder a avenidas, vías estructurantes o corredores que conectan distintas partes de la ciudad.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor bajo</span>
+            <p>Menor protagonismo como elemento intermedio de trayectorias. No implica que la calle sea "mala", sino que el sistema no la usa intensivamente como ruta de paso. Normal en calles residenciales interiores.</p>
+          </div>
+        </div>
+        <p class="critical-note">Choice ≠ Integración. Una calle puede ser muy usada como ruta de paso y no ser especialmente central como destino, o viceversa. Interpretar choice como sinónimo de integración elimina una de las distinciones más valiosas del método.</p>
+      </div>
+    </section>
+
+    <!-- ── NAIN ── -->
+    <section data-section="nain" id="nain">
+      <div class="metric-full red reveal">
+        <div class="metric-header">
+          <div class="metric-header-left">
+            <span class="metric-abbrev">NAIN — Normalised Angular Integration</span>
+            <h3>NAIN</h3>
+            <p class="metric-simple">"Integración angular ajustada para comparar entre sistemas o radios distintos."</p>
+          </div>
+          <div class="hilo-badges">
+            <span class="hilo-label">Valores</span>
+            <span class="badge high">Alto → muy accesible, central</span>
+            <span class="badge low">Bajo → segregada angularmente</span>
+          </div>
+        </div>
+        <div class="metric-body">
+          <div>
+            <span class="metric-section-label">Definición técnica</span>
+            <p>Versión normalizada de la integración angular. Corrige los efectos del tamaño del sistema para permitir comparaciones más robustas entre redes o entre radios de análisis distintos. Se consolidó como una de las métricas más usadas en análisis segmentarios contemporáneos.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">¿Por qué angular?</span>
+            <p>Incorpora la lógica del giro dentro del desplazamiento: no solo cuenta pasos topológicos, sino que considera la continuidad direccional. Seguir recto tiene menor costo que girar pronunciadamente, lo que aproxima mejor los patrones reales de movimiento.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor alto</span>
+            <p>Segmento altamente accesible dentro de la red, considerando la lógica angular. En la práctica, suele corresponder a los ejes más directos y continuos dentro de la estructura urbana.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Diferencia con INT clásica</span>
+            <p>NAIN trabaja sobre segmentos (no líneas axiales completas) y usa pesos angulares. Suele ser preferida en análisis urbanos sobre redes de calles porque es más sensible a la geometría real del trazado.</p>
+          </div>
+        </div>
+        <p class="critical-note">NAIN puede producir falsa sensación de precisión si se interpreta sin contexto. Su valor depende de la representación usada, del radio aplicado y de la estructura de la red. Siempre leerla junto con NACH, conectividad y escala de análisis.</p>
+      </div>
+    </section>
+
+    <!-- ── NACH ── -->
+    <section data-section="nach" id="nach">
+      <div class="metric-full warm reveal">
+        <div class="metric-header">
+          <div class="metric-header-left">
+            <span class="metric-abbrev">NACH — Normalised Angular Choice</span>
+            <h3>NACH</h3>
+            <p class="metric-simple">"Choice angular ajustado: qué calles funcionan como rutas de paso en toda la red."</p>
+          </div>
+          <div class="hilo-badges">
+            <span class="hilo-label">Valores</span>
+            <span class="badge high">Alto → corredor estructurante</span>
+            <span class="badge low">Bajo → ruta secundaria</span>
+          </div>
+        </div>
+        <div class="metric-body">
+          <div>
+            <span class="metric-section-label">Definición técnica</span>
+            <p>Versión normalizada del angular choice. Busca hacer comparables los valores entre sistemas de distinto tamaño y entre radios diferentes, aplicada a la lógica de intermediación o paso. Muy usada en análisis segmentarios para representar jerarquías de movimiento potencial.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Dimensión que mide</span>
+            <p><strong>Potencial de paso angular normalizado.</strong> En lugar de preguntar qué tan cerca está una calle del resto, pregunta qué tan importante es como ruta intermedia dentro de los caminos más probables del sistema.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor alto</span>
+            <p>Alta relevancia como corredor de paso. Suele corresponder a ejes estructurantes, avenidas que conectan distintos sectores o vías que articulan la red a escala urbana. Son los ejes que "el sistema tiende a usar" para conectar origen y destino.</p>
+          </div>
+          <div>
+            <span class="metric-section-label">Valor bajo</span>
+            <p>Escasa relevancia como corredor de paso. Normal en calles residenciales, tramos interiores o zonas donde la red se organiza en torno a otros ejes estructurantes.</p>
+          </div>
+        </div>
+        <p class="critical-note">NACH expresa potencial configuracional, no conteos observados de flujo. No equivale a intensidad real de uso medida en terreno. Su utilidad aumenta cuando se contrasta con información empírica de movilidad, flujos u otras fuentes observacionales.</p>
+      </div>
+    </section>
+
+    <!-- ── GEOMÉTRICOS ── -->
+    <section data-section="geometricos" id="geometricos">
+      <h3>Atributos geométricos y de identificación</h3>
+
+      <p class="reveal">En las tablas exportadas desde QGIS o depthmapX suelen aparecer también campos auxiliares. No son métricas sintácticas en sentido estricto, pero son necesarios para contextualizar y cruzar resultados.</p>
+
+      <table class="comparison-table reveal">
+        <thead>
+          <tr>
+            <th>Campo</th>
+            <th>Significado</th>
+            <th>Utilidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>segLEN</td>
+            <td>Longitud del segmento</td>
+            <td>Relacionar resultados sintácticos con geometría real; revisar si patrones se concentran en tramos largos o cortos</td>
+          </tr>
+          <tr>
+            <td>axLEN</td>
+            <td>Longitud de la línea axial asociada</td>
+            <td>Identificar el eje axial de origen cuando se trabaja con análisis combinados axial/segmentario</td>
+          </tr>
+          <tr>
+            <td>axid / axref</td>
+            <td>Identificador o referencia de la línea axial</td>
+            <td>Trazar la correspondencia entre segmentos y sus líneas axiales de origen</td>
+          </tr>
+          <tr>
+            <td>ref</td>
+            <td>Identificador del registro</td>
+            <td>Clave de unión para joins con otras capas (criminalidad, usos de suelo, etc.)</td>
+          </tr>
+          <tr>
+            <td>axCONN</td>
+            <td>Conectividad en el modelo axial</td>
+            <td>Distinguir de angCONN; son conceptualmente similares pero calculados sobre representaciones distintas</td>
+          </tr>
+          <tr>
+            <td>angCONN</td>
+            <td>Conectividad en el modelo segmentario/angular</td>
+            <td>Más relevante para análisis contemporáneos sobre redes segmentadas</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warning reveal">
+        <span class="callout-icon">Importante</span>
+        <p>axCONN y angCONN no son equivalentes directos aunque miden el mismo concepto general. No conviene compararlos automáticamente como si fueran la misma variable.</p>
+      </div>
+    </section>
+
+    <!-- ── SÍNTESIS ── -->
+    <section data-section="sintesis" id="sintesis">
+      <div class="synthesis-box reveal">
+        <h3>Síntesis: cuatro dimensiones del espacio</h3>
+        <div class="synthesis-grid">
+          <div class="synthesis-item">
+            <span class="dim-label">Dimensión 1</span>
+            <h4>Articulación local</h4>
+            <p>Cuántas conexiones directas tiene un elemento en su entorno inmediato.</p>
+            <div class="metrics-list">CONN, axCONN, angCONN</div>
+          </div>
+          <div class="synthesis-item">
+            <span class="dim-label">Dimensión 2</span>
+            <h4>Centralidad configuracional</h4>
+            <p>Qué tan accesible o central es un elemento respecto del sistema completo.</p>
+            <div class="metrics-list">INT, NAIN, Mean Depth</div>
+          </div>
+          <div class="synthesis-item">
+            <span class="dim-label">Dimensión 3</span>
+            <h4>Lejanía o segregación</h4>
+            <p>Qué tan profundo o alejado está un elemento del resto de la red.</p>
+            <div class="metrics-list">Total Depth, Mean Depth</div>
+          </div>
+          <div class="synthesis-item">
+            <span class="dim-label">Dimensión 4</span>
+            <h4>Intermediación / paso</h4>
+            <p>Qué tan importante es un elemento como corredor dentro de las trayectorias del sistema.</p>
+            <div class="metrics-list">Choice, NACH</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout critical reveal">
+        <span class="callout-icon">Advertencia general</span>
+        <p>Ninguna métrica debe interpretarse sola ni como verdad urbana completa. Space Syntax describe una dimensión muy poderosa de la ciudad —su estructura configuracional— pero no reemplaza factores como uso de suelo, calidad ambiental, percepción, seguridad, densidad o actividad observada.</p>
+      </div>
+    </section>
+
+    <!-- Referencias -->
+    <div class="references reveal">
+      <h3>Referencias del capítulo</h3>
+      <ol>
+        <li>Turner, A. (2004). <em>Depthmap 4: A researcher's handbook</em>. University College London.</li>
+        <li>van Nes, A., & Yamu, C. (2021). <em>Introduction to space syntax in urban studies</em>. Springer.</li>
+        <li>Hillier, B. (2007). <em>Space is the machine</em>. Space Syntax.</li>
+        <li>Yamu, C., van Nes, A., & Garau, C. (2021). Bill Hillier's legacy: Space syntax — A synopsis of basic concepts, measures, and empirical application. <em>Sustainability, 13</em>(6), 3394.</li>
+      </ol>
+    </div>
+
+    <div class="chapter-nav">
+      <a href="01-introduccion.html">
+        <span class="nav-label">← Anterior</span>
+        <span class="nav-title">Introducción y bases conceptuales</span>
+      </a>
+      <a href="03-interpretacion.html" class="next">
+        <span class="nav-label">Siguiente →</span>
+        <span class="nav-title">Lectura e interpretación de resultados</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

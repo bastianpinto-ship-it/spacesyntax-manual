@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual de Space Syntax — Cerrillos</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .home-intro {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 3.5rem 4rem 2rem;
+    }
+    .home-intro p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #2c2620;
+      margin-bottom: 1.1rem;
+      max-width: 660px;
+    }
+    .home-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--blue-deep);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #e8f5e9;
+      color: #2e7d32;
+      border-radius: 20px;
+      padding: 0.25rem 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .status-badge.wip {
+      background: #fff8e1;
+      color: #e65100;
+    }
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .index-card .status-badge {
+      margin-top: 0.25rem;
+    }
+    .grid-section {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 4rem 5rem;
+    }
+    @media (max-width: 768px) {
+      .home-intro, .grid-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<button id="sidebar-toggle">☰</button>
+<div id="progress-bar"></div>
+
+<!-- ── Sidebar ── -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <span class="label">Manual de referencia</span>
+    <h1>Space Syntax</h1>
+    <p>Análisis urbano — Cerrillos, Santiago</p>
+  </div>
+
+  <nav class="toc">
+    <div class="toc-section open">
+      <div class="toc-chapter">
+        <span class="ch-num">→</span> Inicio
+      </div>
+      <div class="toc-items">
+        <a class="toc-item active" href="index.html">Portada y contenidos</a>
+      </div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-chapter">
+        <span class="ch-num">01</span> Introducción
+      </div>
+      <div class="toc-items">
+        <a class="toc-item" href="chapters/01-introduccion.html#presentacion">Presentación general</a>
+        <a class="toc-item" href="chapters/01-introduccion.html#bases">Bases conceptuales</a>
+        <a class="toc-item" href="chapters/01-introduccion.html#representaciones">Tipos de representación</a>
+      </div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-chapter">
+        <span class="ch-num">02</span> Métricas
+      </div>
+      <div class="toc-items">
+        <a class="toc-item" href="chapters/02-metricas.html#conn">Connectivity (CONN)</a>
+        <a class="toc-item" href="chapters/02-metricas.html#integration">Integration (INT)</a>
+        <a class="toc-item" href="chapters/02-metricas.html#depth">Total Depth / Mean Depth</a>
+        <a class="toc-item" href="chapters/02-metricas.html#choice">Choice (CH)</a>
+        <a class="toc-item" href="chapters/02-metricas.html#nain">NAIN</a>
+        <a class="toc-item" href="chapters/02-metricas.html#nach">NACH</a>
+      </div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-chapter">
+        <span class="ch-num">03</span> Interpretación
+      </div>
+      <div class="toc-items">
+        <a class="toc-item" href="chapters/03-interpretacion.html#colores">Lectura de mapas de color</a>
+        <a class="toc-item" href="chapters/03-interpretacion.html#alta-int">Calle alta en integración</a>
+        <a class="toc-item" href="chapters/03-interpretacion.html#alto-choice">Calle alta en choice</a>
+        <a class="toc-item" href="chapters/03-interpretacion.html#diferencias">Centralidad vs. paso</a>
+        <a class="toc-item" href="chapters/03-interpretacion.html#radios">Radios de análisis</a>
+      </div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-chapter">
+        <span class="ch-num">04</span> Aplicaciones
+      </div>
+      <div class="toc-items">
+        <a class="toc-item" href="chapters/04-aplicaciones.html">Próximamente</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    Manual en construcción · Cerrillos, Santiago · 2025
+  </div>
+</aside>
+
+<!-- ── Main ── -->
+<main id="main">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Manual de referencia académica</div>
+    <h1>Space Syntax<br>Análisis Urbano</h1>
+    <p class="subtitle">Fundamentos teóricos, métricas e interpretación aplicada para el análisis configuracional de redes urbanas.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="meta-label">Caso de estudio</span>
+        <span class="meta-value">Comuna de Cerrillos, Santiago</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Herramienta</span>
+        <span class="meta-value">QGIS + depthmapX</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="meta-label">Estado</span>
+        <span class="meta-value">En construcción</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-intro reveal">
+    <p>
+      Este manual reúne los conceptos fundamentales de <em>Space Syntax</em> en un formato de referencia rápida, pensado para no tener que buscar cada vez qué significa una métrica, cómo leer un mapa o cuándo usar radio global vs. local. Está orientado al análisis de la red vial de Cerrillos y su cruce con datos de criminalidad, pero sus contenidos son aplicables a cualquier análisis urbano configuracional.
+    </p>
+    <p>
+      El manual está estructurado en capítulos que se pueden leer de forma independiente. El capítulo de métricas es el más útil para consulta rápida durante el trabajo en QGIS.
+    </p>
+  </div>
+
+  <div class="grid-section">
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--blue-deep);margin-bottom:1.5rem;font-weight:600;">Contenidos</h2>
+    <div class="index-grid">
+
+      <a class="index-card reveal" href="chapters/01-introduccion.html">
+        <span class="card-num">01</span>
+        <h3>Introducción y bases conceptuales</h3>
+        <p>Qué es Space Syntax, su origen, la noción de configuración espacial, tipos de representación y escalas de análisis.</p>
+        <span class="status-badge"><span class="status-dot"></span> Completo</span>
+        <span class="card-arrow">Leer capítulo →</span>
+      </a>
+
+      <a class="index-card reveal" href="chapters/02-metricas.html">
+        <span class="card-num">02</span>
+        <h3>Métricas principales</h3>
+        <p>CONN, INT, TD, Choice, NAIN, NACH y atributos geométricos. Definición técnica, explicación simple, valores altos y bajos.</p>
+        <span class="status-badge"><span class="status-dot"></span> Completo</span>
+        <span class="card-arrow">Leer capítulo →</span>
+      </a>
+
+      <a class="index-card reveal" href="chapters/03-interpretacion.html">
+        <span class="card-num">03</span>
+        <h3>Lectura e interpretación de resultados</h3>
+        <p>Cómo leer mapas de color, qué significa que una calle sea alta en integración o choice, radios de análisis.</p>
+        <span class="status-badge"><span class="status-dot"></span> Completo</span>
+        <span class="card-arrow">Leer capítulo →</span>
+      </a>
+
+      <a class="index-card reveal" href="chapters/04-aplicaciones.html">
+        <span class="card-num">04</span>
+        <h3>Aplicaciones y caso Cerrillos</h3>
+        <p>Cruces con criminalidad, integración con datos censales INE, lectura de resultados empíricos.</p>
+        <span class="status-badge wip"><span class="status-dot"></span> En construcción</span>
+        <span class="card-arrow">Próximamente →</span>
+      </a>
+
+    </div>
+  </div>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

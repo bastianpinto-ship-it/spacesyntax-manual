@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cap. 4 — Aplicaciones · Manual Space Syntax</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .wip-banner {
+      background: linear-gradient(135deg, #1a2a4a 0%, #2c4a7c 100%);
+      border-radius: 4px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    .wip-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .wip-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0 0 0.5rem;
+      border: none;
+      padding: 0;
+    }
+    .wip-text p {
+      font-size: 0.85rem;
+      color: rgba(232,224,212,0.65);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .upcoming-list {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .upcoming-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .upcoming-list li .li-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      min-width: 2rem;
+      padding-top: 0.1rem;
+    }
+    .upcoming-list li strong {
+      display: block;
+      font-weight: 600;
+      color: var(--blue-deep);
+      margin-bottom: 0.15rem;
+    }
+    .upcoming-list li span {
+      color: var(--muted);
+    }
+
+    .source-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .source-card .src-icon {
+      width: 36px; height: 36px;
+      border-radius: 4px;
+      background: var(--blue-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .source-card .src-body h4 {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--blue-deep);
+      margin: 0 0 0.2rem;
+    }
+    .source-card .src-body p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .source-card .src-body a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--blue-mid);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .source-card .src-body a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<button id="sidebar-toggle">☰</button>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <span class="label">Manual de referencia</span>
+    <h1>Space Syntax</h1>
+    <p>Análisis urbano — Cerrillos, Santiago</p>
+  </div>
+  <nav class="toc">
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">→</span> Inicio</div>
+      <div class="toc-items"><a class="toc-item" href="../index.html">Portada y contenidos</a></div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">01</span> Introducción</div>
+      <div class="toc-items">
+        <a class="toc-item" href="01-introduccion.html#presentacion">Presentación general</a>
+        <a class="toc-item" href="01-introduccion.html#bases">Bases conceptuales</a>
+        <a class="toc-item" href="01-introduccion.html#representaciones">Tipos de representación</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">02</span> Métricas</div>
+      <div class="toc-items">
+        <a class="toc-item" href="02-metricas.html#conn">CONN</a>
+        <a class="toc-item" href="02-metricas.html#integration">Integration</a>
+        <a class="toc-item" href="02-metricas.html#choice">Choice</a>
+        <a class="toc-item" href="02-metricas.html#nain">NAIN</a>
+        <a class="toc-item" href="02-metricas.html#nach">NACH</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">03</span> Interpretación</div>
+      <div class="toc-items">
+        <a class="toc-item" href="03-interpretacion.html#colores">Lectura de mapas</a>
+        <a class="toc-item" href="03-interpretacion.html#diferencias">Centralidad vs. paso</a>
+        <a class="toc-item" href="03-interpretacion.html#radios">Radios de análisis</a>
+      </div>
+    </div>
+    <div class="toc-section open">
+      <div class="toc-chapter"><span class="ch-num">04</span> Aplicaciones</div>
+      <div class="toc-items">
+        <a class="toc-item active" href="#contexto">Contexto del caso</a>
+        <a class="toc-item" href="#proximos">Contenidos próximos</a>
+        <a class="toc-item" href="#fuentes">Fuentes de datos</a>
+      </div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">Manual en construcción · Cerrillos, Santiago · 2025</div>
+</aside>
+
+<main id="main">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Capítulo 04</div>
+    <h1>Aplicaciones y caso Cerrillos</h1>
+    <p class="subtitle">Cruce de Space Syntax con datos de criminalidad, integración con INE y lectura de resultados empíricos para la comuna de Cerrillos.</p>
+  </div>
+
+  <div class="content-area">
+
+    <div class="chapter-intro reveal">
+      <span class="chapter-number">4.0 — Estado del capítulo</span>
+      <h2>En construcción</h2>
+      <p class="lead">Este capítulo documenta el análisis aplicado a Cerrillos. Se irá completando a medida que avanza la investigación.</p>
+    </div>
+
+    <div class="wip-banner reveal">
+      <div class="wip-icon">🗺</div>
+      <div class="wip-text">
+        <h3>Capítulo en desarrollo activo</h3>
+        <p>Los capítulos 1–3 cubren la base teórica y metodológica. Este capítulo registrará los resultados del análisis de Cerrillos: configuración de la red vial, cruce con estadísticas de criminalidad y lectura de patrones espaciales.</p>
+      </div>
+    </div>
+
+    <!-- Contexto -->
+    <section data-section="contexto" id="contexto">
+      <h3>4.1 — Contexto del caso de estudio</h3>
+
+      <p class="reveal">La comuna de Cerrillos (CUT <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;background:#eee;padding:0.1em 0.3em;border-radius:2px;">13103</code>) forma parte de la zona poniente del Gran Santiago. Su estructura urbana combina tejido residencial consolidado, corredores industriales heredados y sectores de borde metropolitano, lo que la convierte en un caso de interés para examinar cómo la configuración espacial se relaciona con la distribución de fenómenos como la criminalidad.</p>
+
+      <p class="reveal">El análisis Space Syntax de la red vial ya fue calculado en QGIS: los parámetros de integración y choice (global y local) están disponibles. El siguiente paso es cruzar esos valores con estadísticas de criminalidad por manzana censal.</p>
+
+      <div class="callout note reveal">
+        <span class="callout-icon">Marco teórico aplicado</span>
+        <p>El análisis sigue el marco de <strong>Hillier & Sahbaz (2005)</strong> y <strong>Hillier et al. (1993)</strong>, que relacionan configuración espacial con seguridad urbana: la distribución de crímenes no es aleatoria, sino que tiende a concentrarse en calles con determinadas propiedades configuracionales —típicamente baja integración o bajo choice— donde la copresencia espontánea es menor.</p>
+      </div>
+    </section>
+
+    <!-- Próximos contenidos -->
+    <section data-section="proximos" id="proximos">
+      <h3>4.2 — Contenidos por desarrollar</h3>
+
+      <ul class="upcoming-list reveal">
+        <li>
+          <span class="li-num">4.3</span>
+          <div>
+            <strong>Resultados del análisis Space Syntax de Cerrillos</strong>
+            <span>Lectura de los mapas de integración y choice. Identificación de ejes estructurantes, zonas segregadas y jerarquía configuracional de la red vial.</span>
+          </div>
+        </li>
+        <li>
+          <span class="li-num">4.4</span>
+          <div>
+            <strong>Preparación y join de datos de criminalidad</strong>
+            <span>Workflow en QGIS: limpieza del CSV del repositorio bastianolea/delincuencia_chile, join con geometrías de manzanas INE 2017 (CUT 13103), overlay con la capa de red Space Syntax.</span>
+          </div>
+        </li>
+        <li>
+          <span class="li-num">4.5</span>
+          <div>
+            <strong>Análisis de correlación espacial</strong>
+            <span>Cruce entre valores de integración/choice y tasas de criminalidad por manzana. ¿Los delitos se concentran en zonas de baja o alta integración? ¿En corredores de alto choice?</span>
+          </div>
+        </li>
+        <li>
+          <span class="li-num">4.6</span>
+          <div>
+            <strong>Interpretación de resultados bajo el marco de Hillier & Sahbaz</strong>
+            <span>Cada patrón posible —criminalidad en baja integración, en alta integración, o sin correlación— tiene una lectura analítica distinta y justificable dentro del marco teórico.</span>
+          </div>
+        </li>
+        <li>
+          <span class="li-num">4.7</span>
+          <div>
+            <strong>Capas adicionales: usos de suelo y plan regulador</strong>
+            <span>Incorporación de datos del geoportal MINVU IDE para enriquecer la lectura con información de usos y normativa urbana.</span>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Fuentes de datos -->
+    <section data-section="fuentes" id="fuentes">
+      <h3>4.3 — Fuentes de datos del análisis</h3>
+
+      <p class="reveal">Estas son las fuentes de datos identificadas para el análisis aplicado. Se irán actualizando con notas metodológicas sobre su uso efectivo.</p>
+
+      <div class="reveal">
+        <div class="source-card">
+          <div class="src-icon">GH<br>CSV</div>
+          <div class="src-body">
+            <h4>Criminalidad — bastianolea/delincuencia_chile</h4>
+            <p>Estadísticas de criminalidad Chile limpias y en formato compatible con QGIS. Fuente preferida frente a CEAD (que entrega solo PDFs/tablas). Permite join directo con geometrías censales.</p>
+            <a href="https://github.com/bastianolea/delincuencia_chile" target="_blank">github.com/bastianolea/delincuencia_chile →</a>
+          </div>
+        </div>
+
+        <div class="source-card">
+          <div class="src-icon">INE<br>SHP</div>
+          <div class="src-body">
+            <h4>Manzanas censales — INE Geodatos Abiertos (Census 2017)</h4>
+            <p>Shapefiles de manzanas censales. Filtrar por CUT 13103 para obtener solo la comuna de Cerrillos. Se usa como geometría base para el join con los datos de criminalidad.</p>
+            <a href="https://www.ine.gob.cl/herramientas/portal-de-mapas/geodatos-abiertos" target="_blank">ine.gob.cl/geodatos-abiertos →</a>
+          </div>
+        </div>
+
+        <div class="source-card">
+          <div class="src-icon">QGIS<br>NET</div>
+          <div class="src-body">
+            <h4>Red vial Space Syntax — QGIS (ya calculada)</h4>
+            <p>Capa con los parámetros sintácticos calculados: integración y choice globales y locales. Base del análisis. El cruce se hace mediante overlay espacial con la capa de manzanas.</p>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted);">Local · ya disponible</span>
+          </div>
+        </div>
+
+        <div class="source-card">
+          <div class="src-icon">MIN<br>VU</div>
+          <div class="src-body">
+            <h4>Usos de suelo — MINVU IDE Geoportal</h4>
+            <p>Datos de usos de suelo y plan regulador. Capa adicional para enriquecer la interpretación con normativa y actividades urbanas existentes.</p>
+            <a href="https://ide.minvu.cl" target="_blank">ide.minvu.cl →</a>
+          </div>
+        </div>
+
+        <div class="source-card">
+          <div class="src-icon">CEA<br>D</div>
+          <div class="src-body">
+            <h4>CEAD — Centro de Estudios y Análisis del Delito</h4>
+            <p>Fuente oficial de estadísticas de criminalidad. Limitado a PDFs y tablas HTML, lo que dificulta el procesamiento en GIS. Se usa como referencia de validación, no como fuente principal.</p>
+            <a href="https://cead.spd.gov.cl" target="_blank">cead.spd.gov.cl →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="chapter-nav">
+      <a href="03-interpretacion.html">
+        <span class="nav-label">← Anterior</span>
+        <span class="nav-title">Lectura e interpretación de resultados</span>
+      </a>
+      <a href="../index.html" class="next">
+        <span class="nav-label">↑ Volver</span>
+        <span class="nav-title">Portada y contenidos</span>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

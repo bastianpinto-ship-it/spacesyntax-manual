@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cap. 1 — Introducción · Manual Space Syntax</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<button id="sidebar-toggle">☰</button>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <span class="label">Manual de referencia</span>
+    <h1>Space Syntax</h1>
+    <p>Análisis urbano — Cerrillos, Santiago</p>
+  </div>
+  <nav class="toc">
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">→</span> Inicio</div>
+      <div class="toc-items">
+        <a class="toc-item" href="../index.html">Portada y contenidos</a>
+      </div>
+    </div>
+    <div class="toc-section open">
+      <div class="toc-chapter"><span class="ch-num">01</span> Introducción</div>
+      <div class="toc-items">
+        <a class="toc-item active" href="#presentacion">Presentación general</a>
+        <a class="toc-item" href="#bases">Bases conceptuales</a>
+        <a class="toc-item" href="#movimiento">Movimiento natural</a>
+        <a class="toc-item" href="#representaciones">Tipos de representación</a>
+        <a class="toc-item" href="#escalas">Escalas de análisis</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">02</span> Métricas</div>
+      <div class="toc-items">
+        <a class="toc-item" href="02-metricas.html#conn">Connectivity (CONN)</a>
+        <a class="toc-item" href="02-metricas.html#integration">Integration (INT)</a>
+        <a class="toc-item" href="02-metricas.html#depth">Total Depth / Mean Depth</a>
+        <a class="toc-item" href="02-metricas.html#choice">Choice (CH)</a>
+        <a class="toc-item" href="02-metricas.html#nain">NAIN</a>
+        <a class="toc-item" href="02-metricas.html#nach">NACH</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">03</span> Interpretación</div>
+      <div class="toc-items">
+        <a class="toc-item" href="03-interpretacion.html#colores">Lectura de mapas</a>
+        <a class="toc-item" href="03-interpretacion.html#diferencias">Centralidad vs. paso</a>
+        <a class="toc-item" href="03-interpretacion.html#radios">Radios de análisis</a>
+      </div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-chapter"><span class="ch-num">04</span> Aplicaciones</div>
+      <div class="toc-items">
+        <a class="toc-item" href="04-aplicaciones.html">Próximamente</a>
+      </div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">Manual en construcción · Cerrillos, Santiago · 2025</div>
+</aside>
+
+<main id="main">
+  <div class="page-hero">
+    <div class="hero-eyebrow">Capítulo 01</div>
+    <h1>Introducción y bases conceptuales</h1>
+    <p class="subtitle">Qué es Space Syntax, de dónde viene, y por qué la forma del espacio importa para entender la ciudad.</p>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ── 1. Presentación ── -->
+    <section data-section="presentacion" id="presentacion">
+      <div class="chapter-intro reveal">
+        <span class="chapter-number">1.1 — Presentación general</span>
+        <h2>¿Qué es Space Syntax?</h2>
+        <p class="lead">Un enfoque teórico y metodológico para estudiar cómo la configuración del espacio construido influye en el comportamiento social y urbano.</p>
+      </div>
+
+      <p class="reveal">Space Syntax es un enfoque orientado a estudiar la relación entre <strong>configuración espacial</strong> y vida social en edificios, barrios y ciudades. Su relevancia en arquitectura y urbanismo reside en que permite describir, comparar e interpretar cómo la forma del espacio influye en accesibilidad, movimiento, centralidad, copresencia y uso.</p>
+
+      <p class="reveal">En lugar de analizar calles o recintos como objetos aislados, Space Syntax los entiende como partes de un <strong>sistema relacional</strong>: la posición de cada elemento dentro de la totalidad modifica su comportamiento espacial.</p>
+
+      <div class="callout note reveal">
+        <span class="callout-icon">Idea central</span>
+        <p>La forma de la red urbana no es neutra. Algunas configuraciones facilitan el movimiento y la accesibilidad, mientras otras producen profundidad y segregación relativa. La estructura espacial de una ciudad organiza oportunidades diferenciales de encuentro, paso y localización de actividades.</p>
+      </div>
+
+      <!-- SVG: grafo conceptual simple -->
+      <figure class="diagram-container reveal">
+        <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;">
+          <!-- nodos -->
+          <defs>
+            <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#4a7cb8"/>
+            </marker>
+          </defs>
+          <!-- líneas de conexión -->
+          <line x1="100" y1="100" x2="220" y2="60"  stroke="#c8bfb0" stroke-width="1.5"/>
+          <line x1="100" y1="100" x2="220" y2="140" stroke="#c8bfb0" stroke-width="1.5"/>
+          <line x1="220" y1="60"  x2="340" y2="100" stroke="#c8bfb0" stroke-width="1.5"/>
+          <line x1="220" y1="140" x2="340" y2="100" stroke="#4a7cb8" stroke-width="2.5"/>
+          <line x1="340" y1="100" x2="460" y2="60"  stroke="#c8bfb0" stroke-width="1.5"/>
+          <line x1="340" y1="100" x2="460" y2="140" stroke="#c8bfb0" stroke-width="1.5"/>
+          <line x1="220" y1="60"  x2="460" y2="60"  stroke="#c8bfb0" stroke-width="1" stroke-dasharray="4,3"/>
+          <!-- nodos segregados -->
+          <circle cx="100" cy="100" r="14" fill="#f5f0e8" stroke="#c8bfb0" stroke-width="1.5"/>
+          <circle cx="220" cy="60"  r="14" fill="#f5f0e8" stroke="#c8bfb0" stroke-width="1.5"/>
+          <circle cx="220" cy="140" r="14" fill="#f5f0e8" stroke="#c8bfb0" stroke-width="1.5"/>
+          <!-- nodo integrado -->
+          <circle cx="340" cy="100" r="20" fill="#c0392b" stroke="none"/>
+          <circle cx="460" cy="60"  r="14" fill="#f5f0e8" stroke="#c8bfb0" stroke-width="1.5"/>
+          <circle cx="460" cy="140" r="14" fill="#f5f0e8" stroke="#c8bfb0" stroke-width="1.5"/>
+          <!-- etiquetas -->
+          <text x="340" y="105" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="white" font-family="monospace" font-weight="bold">INT</text>
+          <text x="340" y="132" text-anchor="middle" font-size="9" fill="#c0392b" font-family="monospace">alta integración</text>
+          <text x="100" y="125" text-anchor="middle" font-size="9" fill="#6b6459" font-family="monospace">profunda</text>
+        </svg>
+        <figcaption>Figura 1.1 — En una red espacial, el nodo rojo ocupa una posición central (alta integración) mientras los nodos grises están más segregados. La misma lógica aplica a calles dentro de una ciudad.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ── 2. Bases conceptuales ── -->
+    <section data-section="bases" id="bases">
+      <h3>1.2 — Bases conceptuales y desarrollo teórico</h3>
+
+      <h4>Origen del enfoque</h4>
+      <p class="reveal">El origen de Space Syntax se asocia a los trabajos de <strong>Bill Hillier y Julienne Hanson</strong>, especialmente a <em>The Social Logic of Space</em> (1984). Allí se presenta una nueva teoría del espacio como componente activo del funcionamiento social, y se desarrolla un conjunto de métodos para describir y analizar patrones espaciales en edificios y asentamientos.</p>
+
+      <p class="reveal">Hillier profundizó esta línea en <em>Space is the Machine</em> (1996/2007), donde consolidó una teoría configuracional de la arquitectura y la ciudad, extendiéndola desde el análisis arquitectónico hacia problemas urbanos más complejos: estructura de la red vial, emergencia de centralidades y relación entre configuración y movimiento.</p>
+
+      <blockquote class="reveal">
+        "Space Syntax studies how space is organized and what effects that organization produces — not just how a street looks, but what place it occupies within the general structure."
+        <cite>Hillier, B. (2007). Space is the Machine.</cite>
+      </blockquote>
+
+      <h4>La noción de configuración</h4>
+      <p class="reveal">El concepto central del enfoque es la <strong>configuración espacial</strong>: una red de relaciones donde cada parte adquiere significado por su posición relativa dentro de un conjunto. No basta observar relaciones inmediatas entre espacios; es necesario considerar cómo esas relaciones forman patrones complejos dentro del sistema completo.</p>
+
+      <div class="callout definition reveal">
+        <span class="callout-icon">Definición clave</span>
+        <p><strong>Configuración</strong> es la estructura de relaciones entre espacios, donde la posición de un elemento depende de la red completa y no solo de su vecindad más próxima. Una calle puede ser accesible localmente pero irrelevante a escala urbana, o viceversa.</p>
+      </div>
+    </section>
+
+    <!-- ── 3. Movimiento natural ── -->
+    <section data-section="movimiento" id="movimiento">
+      <h3>1.3 — La teoría del movimiento natural</h3>
+
+      <p class="reveal">Uno de los aportes más influyentes del campo fue la formulación de la teoría del <strong>natural movement</strong> (Hillier, Penn, Hanson, Grajewski & Xu, 1993). La tesis central es que una parte importante del movimiento peatonal y vehicular en la ciudad no depende solo de atractores puntuales —como comercio o equipamientos—, sino de la configuración misma de la red.</p>
+
+      <p class="reveal">Ciertas calles concentran flujo porque la estructura espacial las privilegia como rutas probables de paso y conexión. El espacio no solo aloja funciones urbanas; también produce las condiciones para que estas se distribuyan diferencialmente.</p>
+
+      <!-- Diagrama flujo / movimiento -->
+      <figure class="diagram-container reveal">
+        <svg viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;">
+          <defs>
+            <marker id="arr2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="#c0392b"/>
+            </marker>
+            <marker id="arr3" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+              <path d="M0,0 L7,3.5 L0,7 Z" fill="#4a7cb8"/>
+            </marker>
+          </defs>
+          <!-- cajas -->
+          <rect x="20"  y="55" width="120" height="50" rx="3" fill="#1a2a4a" />
+          <rect x="200" y="55" width="140" height="50" rx="3" fill="#c0392b" />
+          <rect x="400" y="55" width="140" height="50" rx="3" fill="#1a2a4a" />
+          <!-- flechas -->
+          <line x1="140" y1="80" x2="198" y2="80" stroke="#c0392b" stroke-width="2" marker-end="url(#arr2)"/>
+          <line x1="340" y1="80" x2="398" y2="80" stroke="#4a7cb8" stroke-width="2" marker-end="url(#arr3)"/>
+          <!-- textos -->
+          <text x="80"  y="77" text-anchor="middle" font-size="10" fill="white" font-family="'Source Serif 4',serif">Configuración</text>
+          <text x="80"  y="92" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.6)" font-family="'Source Serif 4',serif">de la red</text>
+          <text x="270" y="77" text-anchor="middle" font-size="10" fill="white" font-family="'Source Serif 4',serif" font-weight="bold">Movimiento</text>
+          <text x="270" y="92" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.7)" font-family="'Source Serif 4',serif">natural</text>
+          <text x="470" y="77" text-anchor="middle" font-size="10" fill="white" font-family="'Source Serif 4',serif">Localización</text>
+          <text x="470" y="92" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.6)" font-family="'Source Serif 4',serif">de actividades</text>
+        </svg>
+        <figcaption>Figura 1.2 — Cadena causal del movimiento natural: la configuración de la red genera flujos diferenciales, que a su vez atraen localización de usos y actividades urbanas.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ── 4. Representaciones ── -->
+    <section data-section="representaciones" id="representaciones">
+      <h3>1.4 — Tipos de representación</h3>
+
+      <p class="reveal">Todo análisis sintáctico parte de una representación del espacio. Las métricas no se aplican directamente sobre la realidad física, sino sobre una abstracción formal del sistema espacial. La representación define qué se considera un elemento, cómo se conectan y qué tipo de relación se mide.</p>
+
+      <div class="metric-grid reveal">
+        <div class="metric-card blue">
+          <span class="metric-tag">Clásico</span>
+          <h4>Mapa Axial</h4>
+          <p class="simple-def">El menor conjunto de líneas rectas más largas que cubren el sistema de espacios accesibles.</p>
+          <p>Fue la representación fundacional del campo. Reduce la complejidad física a una red de líneas de movimiento y visión potencial. Útil para entender continuidad e intersección, pero limitado en redes irregulares.</p>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-tag">Contemporáneo</span>
+          <h4>Análisis Segmentario</h4>
+          <p class="simple-def">Divide la red en segmentos entre intersecciones, capturando la estructura fina del sistema vial.</p>
+          <p>Más preciso que el axial para análisis urbanos. Permite captar la experiencia real del desplazamiento: decisiones en cada tramo y cruce, no solo en grandes ejes. Base para NAIN y NACH.</p>
+        </div>
+
+        <div class="metric-card warm">
+          <span class="metric-tag">Angular</span>
+          <h4>Análisis Angular</h4>
+          <p class="simple-def">Considera el cambio direccional como parte del costo de desplazamiento.</p>
+          <p>Seguir recto tiene menor costo cognitivo que realizar giros pronunciados. El análisis angular calcula rutas mínimas por continuidad geométrica, acercando mejor las representaciones sintácticas a patrones observables de movilidad.</p>
+        </div>
+
+        <div class="metric-card gold">
+          <span class="metric-tag">Visibilidad</span>
+          <h4>VGA e Isovistas</h4>
+          <p class="simple-def">Análisis basados en qué puede verse desde cada punto del espacio.</p>
+          <p>El <em>Visibility Graph Analysis</em> transforma el espacio visible en una red de intervisibilidad. Especialmente útil en plazas, edificios e interiores. Menos común en análisis de redes viales, pero relevante para espacios públicos.</p>
+        </div>
+      </div>
+
+      <div class="callout warning reveal">
+        <span class="callout-icon">Atención metodológica</span>
+        <p>Leer una medida axial como si fuera angular, o interpretar un análisis local como si fuera global, conduce a errores conceptuales. Antes de interpretar un resultado, siempre se debe saber sobre qué representación fue calculado y a qué escala corresponde.</p>
+      </div>
+    </section>
+
+    <!-- ── 5. Escalas ── -->
+    <section data-section="escalas" id="escalas">
+      <h3>1.5 — Escalas de análisis</h3>
+
+      <p class="reveal">Space Syntax puede operar desde edificios y pequeñas áreas urbanas hasta ciudades completas o sistemas territoriales mayores. La lógica general se mantiene en todas las escalas: representar elementos espaciales, conectarlos según una relación definida y analizar la red resultante.</p>
+
+      <!-- tabla de escalas -->
+      <table class="comparison-table reveal">
+        <thead>
+          <tr>
+            <th>Escala</th>
+            <th>Contexto típico</th>
+            <th>Representación usual</th>
+            <th>Métricas relevantes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Edificio / interior</td>
+            <td>Museos, hospitales, vivienda colectiva</td>
+            <td>Axial, VGA, isovistas</td>
+            <td>Integración, conectividad, visibilidad</td>
+          </tr>
+          <tr>
+            <td>Barrio</td>
+            <td>Análisis de accesibilidad local, comercio barrial</td>
+            <td>Segmentario (radio local)</td>
+            <td>NAIN local, NACH local, CONN</td>
+          </tr>
+          <tr>
+            <td>Ciudad / metrópolis</td>
+            <td>Centralidades, jerarquías viales, movilidad</td>
+            <td>Segmentario angular (global)</td>
+            <td>NAIN global, NACH global, choice</td>
+          </tr>
+          <tr>
+            <td>Territorio / región</td>
+            <td>Redes de ciudades, estructura regional</td>
+            <td>Axial o segmentario simplificado</td>
+            <td>Integración global, elección de ejes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="reveal">Una métrica o representación útil en un edificio no siempre se interpreta igual en una ciudad. La elasticidad escalar es una fortaleza del método, pero también obliga a ser cuidadoso con las comparaciones.</p>
+    </section>
+
+    <!-- Referencias -->
+    <div class="references reveal">
+      <h3>Referencias del capítulo</h3>
+      <ol>
+        <li>Hillier, B. (2007). <em>Space is the machine</em>. Space Syntax. UCL Discovery.</li>
+        <li>Hillier, B., & Hanson, J. (1984). <em>The social logic of space</em>. Cambridge University Press.</li>
+        <li>Hillier, B., Penn, A., Hanson, J., Grajewski, T., & Xu, J. (1993). Natural movement: Or, configuration and attraction in urban pedestrian movement. <em>Environment and Planning B, 20</em>(1), 29–66.</li>
+        <li>Turner, A. (2004). <em>Depthmap 4: A researcher's handbook</em>. University College London.</li>
+        <li>van Nes, A., & Yamu, C. (2021). <em>Introduction to space syntax in urban studies</em>. Springer.</li>
+      </ol>
+    </div>
+
+    <!-- Nav entre capítulos -->
+    <div class="chapter-nav">
+      <a href="../index.html">
+        <span class="nav-label">← Anterior</span>
+        <span class="nav-title">Portada y contenidos</span>
+      </a>
+      <a href="02-metricas.html" class="next">
+        <span class="nav-label">Siguiente →</span>
+        <span class="nav-title">Métricas principales</span>
+      </a>
+    </div>
+
+  </div><!-- /content-area -->
+</main>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
