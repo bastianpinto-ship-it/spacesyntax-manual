@@ -118,6 +118,31 @@
       letter-spacing: 0.05em;
     }
     .source-card .src-body a:hover { text-decoration: underline; }
+
+    .ss-map-card {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        background: #fff;
+      }
+      .ss-map-card h4 {
+        margin: 0 0 0.5rem;
+        font-size: 0.9rem;
+        color: var(--blue-deep);
+      }
+      .ss-map-card p {
+        margin: 0 0 0.75rem;
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+      .ss-map-card svg {
+        width: 100%;
+        height: auto;
+        border-radius: 3px;
+        border: 1px solid #d7d7d7;
+        background: #f9f9f9;
+      }
   </style>
 </head>
 <body>
@@ -166,6 +191,7 @@
       <div class="toc-chapter"><span class="ch-num">04</span> Aplicaciones</div>
       <div class="toc-items">
         <a class="toc-item active" href="#contexto">Contexto del caso</a>
+        <a class="toc-item" href="#mapa-cerro-navia">Mapa Cerro Navia</a>
         <a class="toc-item" href="#proximos">Contenidos próximos</a>
         <a class="toc-item" href="#fuentes">Fuentes de datos</a>
       </div>
@@ -208,6 +234,28 @@
       <div class="callout note reveal">
         <span class="callout-icon">Marco teórico aplicado</span>
         <p>El análisis sigue el marco de <strong>Hillier & Sahbaz (2005)</strong> y <strong>Hillier et al. (1993)</strong>, que relacionan configuración espacial con seguridad urbana: la distribución de crímenes no es aleatoria, sino que tiende a concentrarse en calles con determinadas propiedades configuracionales —típicamente baja integración o bajo choice— donde la copresencia espontánea es menor.</p>
+      </div>
+
+
+      <div class="ss-map-card" id="mapa-cerro-navia">
+        <h4>Mapa referencial (random) — Caso Cerro Navia</h4>
+        <p>Visualización ilustrativa de ejes con distintos niveles de integración/choice para el caso de Cerro Navia.</p>
+        <svg viewBox="0 0 760 360" role="img" aria-label="Mapa random Space Syntax de Cerro Navia">
+          <rect x="0" y="0" width="760" height="360" fill="#f4f5f7"/>
+          <line x1="40" y1="70" x2="720" y2="70" stroke="#1f3f6b" stroke-width="8"/>
+          <line x1="120" y1="30" x2="120" y2="320" stroke="#cf3f3f" stroke-width="7"/>
+          <line x1="220" y1="50" x2="220" y2="330" stroke="#e17d2d" stroke-width="6"/>
+          <line x1="340" y1="20" x2="340" y2="340" stroke="#2e8b57" stroke-width="6"/>
+          <line x1="500" y1="30" x2="500" y2="325" stroke="#2d6cc4" stroke-width="6"/>
+          <line x1="620" y1="55" x2="620" y2="315" stroke="#7b4cb8" stroke-width="6"/>
+          <line x1="40" y1="160" x2="720" y2="160" stroke="#f0b429" stroke-width="7"/>
+          <line x1="40" y1="250" x2="720" y2="250" stroke="#268bd2" stroke-width="7"/>
+          <line x1="70" y1="330" x2="710" y2="120" stroke="#b03060" stroke-width="5" opacity="0.8"/>
+          <line x1="80" y1="40" x2="700" y2="330" stroke="#5a6c7d" stroke-width="4" opacity="0.7"/>
+          <circle cx="340" cy="160" r="9" fill="#000"/>
+          <circle cx="500" cy="250" r="9" fill="#000"/>
+          <circle cx="220" cy="250" r="9" fill="#000"/>
+        </svg>
       </div>
     </section>
 
